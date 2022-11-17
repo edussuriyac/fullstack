@@ -72,7 +72,7 @@ const Countries = ({searchString, countriesToShow}) => {
 //**************************************remember to remove api key */
 const Weather = ({city}) => {
   const [weather, setWeather] = useState([])
-  const url='https://api.openweathermap.org/data/2.5/weather?q='+city+'&appid=f4050762386e4176f479181d96cda1da'
+  const url='https://api.openweathermap.org/data/2.5/weather?q='+city+'&appid='+api_key
   const hook = () => {
     axios
       .get(url) // api key remove ************
