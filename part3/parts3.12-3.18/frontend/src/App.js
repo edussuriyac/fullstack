@@ -67,10 +67,10 @@ const updatePerson = (personObject, persons, setPersons, setNewName, setNewNumbe
       setTimeout(() => {          setMessage(null)
       }, 5000)
     }).catch(error=>{
-      console.log('error')
-      setError('Information of '+ personObject.name+' has already been removed from the server')
-      setTimeout(() => {          setError(null)
-      }, 5000)
+      
+      setError(error.response.data.error)
+          setTimeout(() => {          setError(null)
+          }, 5000)
     }) 
     }
 }
@@ -145,7 +145,10 @@ const App = () => {
           setTimeout(() => {          setMessage(null)
           }, 5000)
         }).catch(error=>{
-          console.log('error')
+          console.log(error.response.data)
+          setError(error.response.data.error)
+          setTimeout(() => {          setError(null)
+          }, 5000)
         })
    
   }
