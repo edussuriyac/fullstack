@@ -27,8 +27,8 @@ const nonExistingId = async () => {
     return blog._id.toString()
 }
 
-const blogsInDb = async () => {
-    const blogs = await Blog.find({})
+const blogsInDb = async (token) => {
+    const blogs = await Blog.find({}).set('Authorization', 'bearer '+ token)  
     return blogs.map(blog => blog.toJSON())
 }
 
