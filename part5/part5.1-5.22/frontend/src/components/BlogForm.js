@@ -50,9 +50,9 @@ const BlogForm = ({addBlog}) => {
           </div>
           <div style={showWhenVisible}>
            <form onSubmit={createBlog}>
-            <div>title: <input value={newTitle} onChange={handleTitleChange} id='title'/></div>
-            <div>author: <input value={newAuthor} onChange={handleAuthorChange}/></div>
-            <div>url: <input value={newUrl} onChange={handleUrlChange}/></div>
+            <div>title: <input id='title' value={newTitle} onChange={handleTitleChange} aria-label='title'/></div>
+            <div>author: <input id='author' value={newAuthor} onChange={handleAuthorChange} aria-label='author'/></div>
+            <div>url: <input id='url' value={newUrl} onChange={handleUrlChange} aria-label='url'/></div>
             <div><button onClick={() => setCreateBlogVisible(false)} type="submit">create</button></div>
           </form>
           <button onClick={() => setCreateBlogVisible(false)}>cancel</button>

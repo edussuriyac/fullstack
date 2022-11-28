@@ -18,12 +18,12 @@ test('create new blog', async () => {
     render(<BlogForm addBlog={addBlog}/>)
   
     const user = userEvent.setup()
-    const newNote = screen.getByText('new note')
-    await user.click(newNote)
+    // const newNote = screen.getByText('new note')
+    // await user.click(newNote)
 
-    const title = screen.getByLabelText('title')
-    const author = screen.getByLabelText('author: ')
-    const url = screen.getByLabelText('url: ')
+    const title = screen.getByLabelText("title",  {exact:false})
+    const author = screen.getByLabelText('author')
+    const url = screen.getByLabelText('url')
     const button = screen.getByText('create')
 
     await user.type(title, 'testing a form...')

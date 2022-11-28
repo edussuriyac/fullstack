@@ -9,13 +9,13 @@ const Blog = ({blog, updateBlog, deleteBlog}) => {
     marginBottom: 5
   }
 
- 
+
   const updatedBlog={...blog,likes:blog.likes+1}
   
   const hideWhenVisible = { display: isExpanded ? 'none' : '' }
   const showWhenVisible = { display: isExpanded ? '' : 'none' }
   return(
-    <div style={blogStyle}>
+    <div class='blog' style={blogStyle}>
     <div style={hideWhenVisible}>
     {blog.title}<button onClick={() => setIsExpanded(true)}>show</button>
   </div>

@@ -11,9 +11,6 @@ blogsRouter.get('/', async(request, response) => {
 
 blogsRouter.post('/', async(request, response) => {
     const blog = new Blog(request.body)
-    console.log(request.body)
-    // const token = getTokenFrom(request)
- 
     
     // eslint-disable-next-line no-undef
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
@@ -21,18 +18,21 @@ blogsRouter.post('/', async(request, response) => {
         return response.status(401).json({ error: 'token missing or invalid' })
     }
     const user = request.user
-    console.log(user)
-    blog.user= user._id
-    if (blog.likes === undefined){ blog.likes = 0}
     
+    blog.user= user._id
+ 
+    if (blog.likes === undefined){ blog.likes = 0}
+  
     const savedBlog = await blog.save()
     user.blogs = user.blogs.concat(savedBlog._id)
     await user.save()
+    console.log('*********saved')
+    console.log(savedBlog)
     response.status(201).json(savedBlog)
 })
 
 blogsRouter.put('/:id', async(request, response) => {
-    console.log(request.body)
+  
     const blog = {
         id: request.body.id,
         title:request.body.title,
@@ -55,8 +55,7 @@ blogsRouter.delete('/:id', async (request, response) => {
     }
     const user = await User.findById(decodedToken.id)
     const blog = await Blog.findById(request.params.id)
-    console.log(user)
-    console.log(blog)
+  
     if ( blog.user.toString() === user.id.toString() ){
         await Blog.findByIdAndRemove(request.params.id)
         response.status(204).end()

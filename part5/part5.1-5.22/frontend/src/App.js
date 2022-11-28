@@ -6,20 +6,20 @@ import loginService from './services/login'
 
 const Notification = ({ message }) => {
  
-  if (message===null || message.length === 0 ) { 
-    return null
-  }
+    if (message===null || message.length === 0 ) { 
+      return null
+    }
 
-  return (
-    <div className='msg'>
-      {message}
-    </div>
-  )
+    return (
+      <div className='msg'>
+        {message}
+      </div>
+    )
 }
 
 const NotificationError = ({ error }) => {
  
-  if (error===null || error.length === 0 ) { 
+  if (error === undefined || error===null || error.length === 0 ) { 
     return null
   }
 
@@ -47,6 +47,7 @@ const App = () => {
         <h2> log in to application</h2>
         username
           <input
+          id='username'
           type="text"
           value={username}
           name="Username"
@@ -56,13 +57,14 @@ const App = () => {
       <div>
         password
           <input
+          id='password'
           type="password"
           value={password}
           name="Password"
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit">login</button>
+      <button id='login-button' type="submit">login</button>
     </form>      
   )
 
@@ -70,11 +72,12 @@ const App = () => {
   const addBlog = (blogObject) => {
         blogService
         .create(blogObject)
-        .then(() => {
-          setMessage('a new blog '+blogObject.title + ' by '+ blogObject.author+ ' added')
+        .then((returnedBlog) => {
+          console.log(returnedBlog.data)
+          setMessage('a new blog '+returnedBlog.data.title + ' by '+ returnedBlog.data.author+ ' added')
           setTimeout(() => {          setMessage(null)
           }, 5000)
-          setBlogs(blogs.concat(blogObject))
+          setBlogs(blogs.concat(returnedBlog.data))
           
         }).catch(error=>{
           console.log(error.response.data)
@@ -85,7 +88,7 @@ const App = () => {
   }
 
   const updateBlog = (blogObject) => {
-      console.log(blogObject)
+  
       blogService
       .update(blogObject.id, blogObject)
       .then((returnedBlog) => {
@@ -105,6 +108,7 @@ const App = () => {
 
   const deleteBlog = (blog) => {
     const alert = 'Remove blog ' + blog.title + ' by '+ blog.author
+  
     if (window.confirm(alert) ){
       blogService
       .deleteBlog(blog.id)
@@ -154,24 +158,30 @@ const App = () => {
   }, [])
 
 
-  useEffect(() => {    
+  useEffect(() => {  
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+    if (loggedUserJSON) { 
+      
       blogService.getAll().then(blogs =>
       setBlogs( blogs )
+      
     )  
+    console.log(blogs)
+      }
   }, [])
 
 
   if (user=== null) {
     return (
       <div>
-        <Notification message={message}/>
+      <Notification message={message}/>
       <NotificationError error={error}/>
         {loginForm()}
       </div>
     
     )
   }
-  console.log(blogs)
+  
 
   return (
     <div>
