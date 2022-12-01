@@ -11,14 +11,16 @@ const AnecdoteList = () => {
     anecdoteList: anecdoteList.filter(anecdote=> anecdote.content.includes(searchString))
     const dispatch = useDispatch()
     
-  
+    let timerID
     const vote = (id, anecdote) => {
+      
       console.log('vote', id)
       const message = 'you voted \''+anecdote + '\''
       dispatch(notify(message))
-      setTimeout(() => {
+      clearTimeout(timerID)
+      timerID = setTimeout(() => {
         dispatch(notify(''))
-      }, 3000)
+      }, 5000)
       dispatch(modifyAnecdote(id))
     }
   
