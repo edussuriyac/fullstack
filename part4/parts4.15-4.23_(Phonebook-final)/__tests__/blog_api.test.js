@@ -269,8 +269,8 @@ test('blog without url and title is not added', async () => {
     
     
     const newBlog = {
-        _id: '5a422aa71b54a676234d17f5',
-        author: 'Edsger',
+        _id: '5a422aa71b54a676234d17f2',
+        author: 'Edsger W. Dijkstra',
         userId: user.id,
         __v: 0
     }
@@ -279,7 +279,7 @@ test('blog without url and title is not added', async () => {
         .post('/api/blogs')
         .set('Authorization', 'bearer '+ token)  
         .send(newBlog)
-        .expect(400)
+        
     
     const blogsAtEnd = await helper.blogsInDb(token)
   
