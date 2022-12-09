@@ -22,7 +22,7 @@ const deletePerson = (props) => {
         console.log('error')
         props.setError('Information of '+ props.name+' has already been removed from the server')
       })
-    props.setMessage('Deleted ' +props.name)
+    props.setMessage({message:'Deleted ' +props.name,type:'message'})
     setTimeout(() => {props.setMessage(null)
     }, 5000)
   }
@@ -48,7 +48,7 @@ const PersonForm = ({addPerson,newName,handlePersonChange,newNumber,handleNumber
   )
 }
 
-const updatePerson = (personObject, persons, setPersons, setNewName, setNewNumber,setMessage, setError) => {
+const updatePerson = (personObject, persons, setPersons, setNewName, setNewNumber,setMessage) => {
   console.log(personObject)
   const per=persons.find(person=> person.name===personObject.name)
    
@@ -63,53 +63,46 @@ const updatePerson = (personObject, persons, setPersons, setNewName, setNewNumbe
       setPersons(persons.map(person => person.id!==per.id? person:returnedPerson.data))
       setNewName('')
       setNewNumber('')
-      setMessage('Updated '+personObject.name)
+      setMessage({message:'Updated '+personObject.name, type:'message'})
       setTimeout(() => {          setMessage(null)
       }, 5000)
     }).catch(error=>{
       console.log('error')
-      setError('Information of '+ personObject.name+' has already been removed from the server')
-      setTimeout(() => {          setError(null)
+      setMessage({message:'Information of '+ personObject.name+' has already been removed from the server',type:'error'})
+      setTimeout(() => {          setMessage(null)
       }, 5000)
     }) 
     }
 }
 
-const Persons = ({personsToShow, setPersons, persons, setMessage, setError}) => {
+const Persons = ({personsToShow, setPersons, persons, setMessage}) => {
   
   return (
     <div>
       {personsToShow.map(personObject => 
-          <Person key={personObject.id} name={personObject.name} number ={personObject.number} persons={persons} setPersons={setPersons} id={personObject.id} setMessage={setMessage} setError={setError}/>
+          <Person key={personObject.id} name={personObject.name} number ={personObject.number} persons={persons} setPersons={setPersons} id={personObject.id} setMessage={setMessage} />
         )}
     </div>
   )
 }
 
 const Notification = ({ message }) => {
- 
-  if (message===null || message.length === 0 ) { 
+  if (message===null || message==={} || message=== undefined || message.length===0) { 
     return null
   }
 
+  if(message.type==='error'){
   return (
-    <div className='message'>
-      {message}
+    <div className='error'>
+      {message.message}
     </div>
   )
 }
-
-const NotificationError = ({ error }) => {
- 
-  if (error===null || error.length === 0 ) { 
-    return null
-  }
-
-  return (
-    <div className='error'>
-      {error}
-    </div>
-  )
+return (
+  <div className='msg'>
+    {message.message}
+  </div>
+)
 }
 
 const App = () => {
@@ -121,7 +114,6 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [searchString, setSearchString] = useState('')
   const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
 
 
   const addPerson = (event) => {
@@ -134,14 +126,14 @@ const App = () => {
     }
     
     persons.find(person=> person.name===newName) ? 
-       updatePerson (personObject, persons, setPersons, setNewName, setNewNumber, setMessage, setError): 
+       updatePerson (personObject, persons, setPersons, setNewName, setNewNumber, setMessage): 
         personService
         .create(personObject)
         .then(() => {
           setPersons(persons.concat(personObject))
           setNewName('')
           setNewNumber('')
-          setMessage('Added '+newName)
+          setMessage({message:'Added '+newName,type:'message'})
           setTimeout(() => {          setMessage(null)
           }, 5000)
         }).catch(error=>{
@@ -183,13 +175,12 @@ const App = () => {
       
       <h2>Phonebook</h2>
       <Notification message={message}/>
-      <NotificationError error={error}/>
       <Filter searchString={searchString} handleSearchStringChange={handleSearchStringChange}/>
       <h3>add a new</h3>
       <PersonForm addPerson={addPerson} newName={newName} handlePersonChange={handlePersonChange} 
       newNumber={newNumber} handleNumberChange={handleNumberChange} setMessage={setMessage}/>
       <h3>Numbers</h3>
-      <Persons personsToShow={personsToShow} persons={persons} setPersons={setPersons} setMessage={setMessage} setError={setError}/>
+      <Persons personsToShow={personsToShow} persons={persons} setPersons={setPersons} setMessage={setMessage}/>
     </div>
   )
 }
