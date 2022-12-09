@@ -36,8 +36,7 @@ const CountryShowing = ({country}) => {
       
       {Object.values(country.languages).map((lang) => 
         <li key={lang}>{lang}</li>)}
-      <h1>
-      {country.flag}</h1>
+      <img src={country.flags.png} alt='flag' />
       <Weather city={country.capital[0]}/>
       <br/>
     </div>
@@ -75,15 +74,15 @@ const Weather = ({city}) => {
   const url='https://api.openweathermap.org/data/2.5/weather?q='+city+'&appid='+api_key
   const hook = () => {
     axios
-      .get(url) // api key remove ************
+      .get(url)
       .then(response => {
         console.log(response.data)
         setWeather(response.data)
       })
   }
-  useEffect(hook, [])
+  useEffect(hook, [url])
   
-  if (weather.length!=0){
+  if (weather.length!==0){
   const icon = weather.weather[0].icon
   // const icon = '10d'
   const url_icon = 'http://openweathermap.org/img/wn/'+icon+'@2x.png'
@@ -91,7 +90,7 @@ const Weather = ({city}) => {
     <div>
       <h2> Weather in {city}</h2>
       <p>temperature {weather.main.temp} celcius</p>
-      <img src={url_icon} />
+      <img src={url_icon} alt='weather'/>
       <p>wind {weather.wind.speed} m/s </p>
     
     </div>
