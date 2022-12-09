@@ -2,9 +2,9 @@
   const Header = (props) => {
   
     return (
-        <h1>
+        <h2>
           {props.name}
-        </h1>
+        </h2>
       
     )
     }
@@ -34,7 +34,7 @@
     return (
       <div>
         <b>
-        Total of {total} exercises
+        total of {total} exercises
         </b>
       </div>
     )
