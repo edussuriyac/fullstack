@@ -21,23 +21,23 @@ test('renders content', () => {
 })
 
 test('clicking the button show other data', async () => {
-    const blog = {
-        title: 'test title',
-        author: 'test author',
-        url: 'test url',
-        likes: 0
-      }
-  
- 
-  
-    render(<Blog blog={blog} />)
-  
-    const user = userEvent.setup()
-    const button = screen.getByText('show')
-    await user.click(button)
+  const blog = {
+    title: 'test title',
+    author: 'test author',
+    url: 'test url',
+    likes: 0
+  }
 
-  
-    const element = screen.getByText('test title')
+
+
+  render(<Blog blog={blog} />)
+
+  const user = userEvent.setup()
+  const button = screen.getByText('show')
+  await user.click(button)
+
+
+  const element = screen.getByText('test title')
   const author = screen.queryByText('test author')
   const url = screen.queryByText('test url')
   const likes = screen.queryByText('likes 0')
@@ -45,30 +45,30 @@ test('clicking the button show other data', async () => {
   expect(author).not.toBeInTheDocument()
   expect(url).not.toBeInTheDocument()
   expect(likes).not.toBeInTheDocument()
-  })
+})
 
-  test('clicking the like button props twice called', async () => {
-    const blog = {
-        title: 'test title',
-        author: 'test author',
-        url: 'test url',
-        likes: 0
-      }
-      const updateBlog=jest.fn()
- 
-  
-    render(<Blog blog={blog} updateBlog={updateBlog}/>)
-  
-    const user = userEvent.setup()
-    const button = screen.getByText('show')
-    await user.click(button)
-    const likeButton = screen.getByText('like')
+test('clicking the like button props twice called', async () => {
+  const blog = {
+    title: 'test title',
+    author: 'test author',
+    url: 'test url',
+    likes: 0
+  }
+  const updateBlog=jest.fn()
 
-    await user.click(likeButton)
-    await user.click(likeButton)
-    expect(updateBlog.mock.calls).toHaveLength(2)
-  
-    const element = screen.getByText('test title')
+
+  render(<Blog blog={blog} updateBlog={updateBlog}/>)
+
+  const user = userEvent.setup()
+  const button = screen.getByText('show')
+  await user.click(button)
+  const likeButton = screen.getByText('like')
+
+  await user.click(likeButton)
+  await user.click(likeButton)
+  expect(updateBlog.mock.calls).toHaveLength(2)
+
+  const element = screen.getByText('test title')
   const author = screen.queryByText('test author')
   const url = screen.queryByText('test url')
   const likes = screen.queryByText('likes 0')
@@ -76,5 +76,5 @@ test('clicking the button show other data', async () => {
   expect(author).not.toBeInTheDocument()
   expect(url).not.toBeInTheDocument()
   expect(likes).not.toBeInTheDocument()
-  })
+})
 
