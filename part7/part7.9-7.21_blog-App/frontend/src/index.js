@@ -7,6 +7,7 @@ import { configureStore } from "@reduxjs/toolkit"
 import blogReducer from "./reducers/blogReducer"
 import notificationReducer from "./reducers/notificationReducer"
 import loggedBlogAppUserReducer from "./reducers/loggedBlogAppUserReducer"
+import commentReducer from "./reducers/commentReducer"
 import "./index.css"
 import userReducer from "./reducers/userReducer"
 const store = configureStore({
@@ -15,6 +16,7 @@ const store = configureStore({
     notification: notificationReducer,
     loggedInUser: loggedBlogAppUserReducer,
     users: userReducer,
+    comments: commentReducer
   },
 })
 

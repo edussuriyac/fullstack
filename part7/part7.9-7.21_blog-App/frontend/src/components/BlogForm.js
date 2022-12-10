@@ -30,6 +30,7 @@ const BlogForm = ({ addBlog }) => {
       author: newAuthor,
       likes: 0,
       url: newUrl,
+      comments: []
     })
     setNewAuthor("")
     setNewTitle("")
@@ -42,47 +43,47 @@ const BlogForm = ({ addBlog }) => {
     <div>
       <div style={hideWhenVisible}>
         <button
-          class="btn btn-primary"
+          className="btn btn-primary"
           onClick={() => setCreateBlogVisible(true)}
         >
-          new note
+          create new
         </button>
       </div>
       <div style={showWhenVisible}>
         <form onSubmit={createBlog}>
-          <div class="form-group">
+          <div className="form-group">
             title:{" "}
             <input
               id="title"
               value={newTitle}
               onChange={handleTitleChange}
               aria-label="title"
-              class="form-control"
+              className="form-control"
             />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             author:{" "}
             <input
               id="author"
               value={newAuthor}
               onChange={handleAuthorChange}
               aria-label="author"
-              class="form-control"
+              className="form-control"
             />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             url:{" "}
             <input
               id="url"
               value={newUrl}
               onChange={handleUrlChange}
               aria-label="url"
-              class="form-control"
+              className="form-control"
             />
           </div>
           <div>
             <button
-              class="btn btn-primary"
+              className="btn btn-primary"
               onClick={() => setCreateBlogVisible(false)}
               type="submit"
             >
@@ -92,8 +93,14 @@ const BlogForm = ({ addBlog }) => {
         </form>
 
         <button
-          class="btn btn-primary"
-          onClick={() => setCreateBlogVisible(false)}
+          className="btn btn-primary"
+          onClick={() => {
+            setCreateBlogVisible(false)
+            setNewAuthor("")
+            setNewTitle("")
+            setNewUrl("")
+          }
+          }
         >
           cancel
         </button>

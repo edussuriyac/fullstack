@@ -20,6 +20,8 @@ import {
   removeBlog,
 } from "./reducers/blogReducer"
 
+
+
 const App = () => {
   const dispatch = useDispatch()
   const blogs = useSelector((state) => state.blogs)
@@ -31,7 +33,7 @@ const App = () => {
   const blogRef = useRef()
   const loginForm = () => (
     <form onSubmit={handleLogin}>
-      <div class="form-outline mb-4">
+      <div className="form-outline mb-4">
         <h2> log in to application</h2>
         username
         <input
@@ -42,7 +44,7 @@ const App = () => {
           onChange={({ target }) => setUsername(target.value)}
         />
       </div>
-      <div class="form-outline mb-4">
+      <div className="form-outline mb-4">
         password
         <input
           id="password"
@@ -55,7 +57,7 @@ const App = () => {
       <button
         id="login-button"
         type="submit"
-        class="btn btn-primary btn-block mb-4"
+        className="btn btn-primary btn-block mb-4"
       >
         login
       </button>
@@ -81,6 +83,7 @@ const App = () => {
     }
   }
 
+
   const handleLogin = async (event) => {
     event.preventDefault()
     dispatch(loginUser(username, password))
@@ -104,7 +107,6 @@ const App = () => {
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser")
     if (loggedUserJSON) {
-      console.log("dispatch list")
       dispatch(initializeBlogs())
       dispatch(getUsers())
     }
@@ -119,7 +121,6 @@ const App = () => {
     )
   }
 
-  console.log(user)
   return (
     <div>
       <Notification message={message} />

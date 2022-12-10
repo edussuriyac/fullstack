@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 // import { notification } from './notificationReducer'
 import blogService from "../services/blogs"
 import { notify, removeNotify } from "./notificationReducer"
+import { appendBlogForUser } from "./userReducer"
 
 const initialState = []
 
@@ -26,6 +27,14 @@ const blogSlice = createSlice({
       console.log(action.payload)
       return state.filter((blog) => blog.id !== action.payload)
     },
+    appendComment(state,action) {
+      const commentObject = action.payload
+      console.log(commentObject)
+      return state.map((blog)=> 
+      blog.id!==commentObject.blogId ? blog: {...blog, comments: [...blog.comments, commentObject]}
+
+      )
+    }
   },
 })
 
@@ -43,6 +52,7 @@ export const createBlog = (content) => {
     const newBlog = blog.data
     console.log(newBlog)
     dispatch(appendBlog(newBlog))
+    dispatch(appendBlogForUser(newBlog))
     const message =
       "a new blog " + newBlog.title + " by " + newBlog.author + " added"
     dispatch(notify({ message: message }))
@@ -68,6 +78,6 @@ export const removeBlog = (id) => {
   }
 }
 
-export const { deleteBlog, updateBlog, setBlogs, appendBlog } =
+export const { deleteBlog, updateBlog, setBlogs, appendBlog, appendComment} =
   blogSlice.actions
 export default blogSlice.reducer

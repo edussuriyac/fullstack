@@ -5,11 +5,11 @@ const Notification = () => {
   if (message === undefined || message === null || message.length === 0) {
     return null
   } else if (message.type === "alert") {
-    return <div className="error">{message.message}</div>
+    return <div classNameName="error">{message.message}</div>
   }
 
   return (
-    <div class="alert alert-primary" role="alert">
+    <div className="alert alert-primary" role="alert">
       {message.message}
     </div>
   )
