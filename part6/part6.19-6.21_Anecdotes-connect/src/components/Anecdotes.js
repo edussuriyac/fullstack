@@ -19,7 +19,7 @@ const AnecdoteList = () => {
       dispatch(notify(message))
       clearTimeout(timerID)
       timerID = setTimeout(() => {
-        dispatch(notify(''))
+        dispatch(notify(null))
       }, 5000)
       dispatch(modifyAnecdote(id))
     }

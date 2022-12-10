@@ -17,7 +17,7 @@ const AnecdoteForm = (props) => {
       
         clearTimeout(timerID)
         timerID = setTimeout(() => {
-          props.notify('')
+          props.notify(null)
         }, 3000)
 
       }

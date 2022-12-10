@@ -10,12 +10,17 @@ const Notification = (props) => {
     borderWidth: 1
   }
 
-  return (
-    <div style={style}>
-      {notification}
-    </div>
-  )
+  console.log(notification)
+  if(notification[0]===null  || notification.length===0){
+    return null
+    }
+    return (
+      <div style={style}>
+        {notification}
+      </div>
+    )
 }
+
 
 const mapStateToProps = (state) => {
   return {

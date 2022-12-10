@@ -14,7 +14,7 @@ const AnecdoteForm = (props) => {
         
         dispatch(notify(message))
         setTimeout(() => {
-          dispatch(notify(''))
+          dispatch(notify(null))
         }, 3000)
 
       }

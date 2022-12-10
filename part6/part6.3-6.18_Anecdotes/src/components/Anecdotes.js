@@ -17,7 +17,7 @@ const AnecdoteList = () => {
       const message = 'you voted \''+anecdote + '\''
       dispatch(notify(message))
       setTimeout(() => {
-        dispatch(notify(''))
+        dispatch(notify(null))
       }, 3000)
       dispatch(modifyAnecdote(id))
     }
